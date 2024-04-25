@@ -1,11 +1,9 @@
 # request-loading
 
-[npm][npm-url] 地址
-
 基于 TypeScript 开发的 HTTP 请求 Loading 动画插件，主要用于延迟展示 Loading 和防止重复点击。
 
-延迟展示 Loading，短时间内的请求不展示 Loading，当请求时间达到某个阈值（默认 500ms），则展示 Loading，为了防止 Loading 闪烁，做了最少展示时间处理。
-防重复点击，当调用 Loading show 时，则先展示透明遮罩，用于阻止用户点击，Loading hide 时，则移除该遮罩。
+  延迟展示 Loading，短时间内的请求不展示 Loading，当请求时间达到某个阈值（默认 500ms），则展示 Loading，为了防止 Loading 闪烁，做了最少展示时间处理。
+  防重复点击，当调用 Loading show 时，则先展示透明遮罩，用于阻止用户点击，Loading hide 时，则移除该遮罩。
 
 ### 安装
 
@@ -27,7 +25,7 @@ npm run dev
 ### 用法
 
 ```ts
-// 目录 mock/index.ts
+// 需要引入全局样式
 import Loading from 'request-loading'
 import 'request-loading/dist/index.css'
 
@@ -60,4 +58,3 @@ http.get('/user/info').then(() => {
 
 MIT
 
-[npm-url]: https://npmjs.com/package/request-loading

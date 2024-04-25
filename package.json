@@ -27,10 +27,9 @@
     "url": "git+https://github.com/willianLu/request-loading.git"
   },
   "keywords": [
-    "vite",
-    "mock",
-    "dev",
-    "server"
+    "http",
+    "loading",
+    "requet"
   ],
   "author": {
     "name": "willianLu",
@@ -61,6 +60,6 @@
   },
   "dependencies": {},
   "nano-staged": {
-    "lib/**/*.{ts,tsx,js,vue,less,md}": "prettier --write"
+    "lib/**/*.{ts,tsx,js,vue,less,scss}": "prettier --write"
   }
 }
