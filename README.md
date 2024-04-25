@@ -1,4 +1,4 @@
-# vite-plugin-simple-mock
+# request-loading
 
 [npm][npm-url] 地址
 
@@ -29,6 +29,7 @@ npm run dev
 ```ts
 // 目录 mock/index.ts
 import Loading from 'request-loading'
+import 'request-loading/dist/index.css'
 
 Loading.show()
 
