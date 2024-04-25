@@ -3,4 +3,3 @@ dist
 node_module
 .husky
 example
-*.md

@@ -60,6 +60,6 @@
   },
   "dependencies": {},
   "nano-staged": {
-    "lib/**/*.{ts,tsx,js,vue,less,scss}": "prettier --write"
+    "lib/**/*.{ts,tsx,js,vue,less,scss,md}": "prettier --write"
   }
 }
