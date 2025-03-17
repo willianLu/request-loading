@@ -72,8 +72,9 @@ export default class Loading {
       clearTimeout(this.timeoutId)
       this.timeoutId = null
     }
-    if (this.timestemp === 0 || !this.isShow) return
+    if (this.timestemp === 0) return
     document.body.removeChild(this.mask)
+    if (!this.isShow) return
     // 弹窗show -> hide的持续时间
     const duration = Date.now() - this.timestemp
     this.timestemp = 0
