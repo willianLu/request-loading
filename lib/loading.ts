@@ -17,6 +17,7 @@ export default class Loading {
   private delay = 500
   private timestemp = 0
   private timeoutId: ReturnType<typeof setTimeout> | null = null
+  private isShow = false
   constructor() {
     this.init()
   }
@@ -63,6 +64,7 @@ export default class Loading {
     this.timeoutId = setTimeout(() => {
       document.body.appendChild(this.load)
       this.timeoutId = null
+      this.isShow = true
     }, this.delay)
   }
   hide() {
@@ -70,7 +72,7 @@ export default class Loading {
       clearTimeout(this.timeoutId)
       this.timeoutId = null
     }
-    if (this.timestemp === 0) return
+    if (this.timestemp === 0 || !this.isShow) return
     document.body.removeChild(this.mask)
     // 弹窗show -> hide的持续时间
     const duration = Date.now() - this.timestemp
@@ -80,6 +82,7 @@ export default class Loading {
     setTimeout(
       () => {
         document.body.removeChild(this.load)
+        this.isShow = false
       },
       // 展示不足300ms的，延迟补足到300ms消失
       duration - this.delay < 300 ? 300 + this.delay - duration : 0

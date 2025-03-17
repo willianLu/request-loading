@@ -1,5 +1,6 @@
 example
 lib
+.DS_Store
 .husky
 package-lock.json
 yarn.lock
