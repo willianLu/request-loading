@@ -44,17 +44,21 @@ http.get('/user/info').then(() => {
 - setConfig(options)
   你可以设置 Loading 的配置，来达到更理想的效果
 
-| 参数         | 类型   | 必填项 | 默认                     | 说明                      |
-| ------------ | ------ | ------ | ------------------------ | ------------------------- |
-| zIndex       | number | 否     | 3000                     | 指定 loadin 层级          |
-| delay        | number | 否     | 500                      | 延迟展示 loading 的时间   |
-| icon         | string | 否     | 'default'、'dot'、 'bar' | 默认提供三种 Loading 动画 |
-| iconTemplate | string | 否     | --                       | 设置自定义 icon 模版      |
+| 参数    | 类型   | 必填项 | 默认                     | 说明                          |
+| ------- | ------ | ------ | ------------------------ | ----------------------------- |
+| zIndex  | number | 否     | 3000                     | 指定 loadin 层级              |
+| delay   | number | 否     | 500                      | 延迟展示 loading 的时间       |
+| icon    | string | 否     | 'default'、'dot'、 'bar' | 默认提供三种 Loading 动画     |
+| message | string | 否     | -                        | loading 展示文案，最多 7 个字 |
 
 > 对于可能存在的 zIndex 层级问题，本工具做了兼容支持，若存在视图中展示元素的层级(zIndex)高于设置的 zIndex，则取视图中展示元素的最高层级(zIndex)+1
 
-- show
+- show(options)
   Loading 展示调用
+  | 参数 | 类型 | 必填项 | 默认 | 说明 |
+  | ------ | ------ | ------ | ------------------------ | ------------------------- |
+  | icon | string | 否 | 'default'、'dot'、 'bar' | 默认提供三种 Loading 动画 |
+  | message | string | 否 | - | loading 展示文案，最多 7 个字 |
 
 - hide
   关闭 Loading 调用

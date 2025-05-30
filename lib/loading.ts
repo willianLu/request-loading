@@ -6,13 +6,18 @@ export interface LoadingOptions {
   zIndex?: number
   delay?: number
   icon?: IconType
-  iconTemplate?: string
+}
+
+export interface ShowOptions {
+  icon?: IconType
+  message?: string
 }
 
 export default class Loading {
   private mask!: HTMLDivElement
   private load!: HTMLDivElement
   private icon: IconType = 'default'
+  private message = ''
   private zIndex = 3000
   private delay = 500
   private timestemp = 0
@@ -33,7 +38,6 @@ export default class Loading {
     const load = document.createElement('div')
     load.className = 'request-loading-wrap'
     load.style.zIndex = `${this.zIndex + 1}`
-    load.innerHTML = this.getIconTemplate(this.icon)
     this.load = load
   }
   private getIconTemplate(type?: IconType) {
@@ -49,11 +53,7 @@ export default class Loading {
   setConfig(options: LoadingOptions) {
     this.zIndex = options.zIndex || this.zIndex
     this.delay = options.delay || 500
-    if (options.iconTemplate) {
-      this.load.innerHTML = options.iconTemplate
-    } else if (options.icon) {
-      this.load.innerHTML = this.getIconTemplate(options.icon)
-    }
+    this.icon = options.icon || 'default'
   }
   // 获取当前视图中，最高的z-index，最小为3000
   private getViewTopZIndex() {
@@ -75,7 +75,18 @@ export default class Loading {
     }
     return max
   }
-  show() {
+  private getLoadContent(options?: ShowOptions) {
+    options = options || {}
+    const icon = options.icon || this.icon
+    const message = options.message || this.message
+    let html = `<div>${this.getIconTemplate(icon)}`
+    if (message) {
+      html += `<div class="request-loading-message">${message}</div>`
+    }
+    html += `</div>`
+    return html
+  }
+  show(options?: ShowOptions) {
     // 防止连续多次调用show，已最初的调用为准
     if (this.timestemp > 0) return
     this.timestemp = Date.now()
@@ -83,6 +94,7 @@ export default class Loading {
     console.log('[ 当前视图最高zIndex ]', zIndex)
     this.mask.style.zIndex = `${zIndex}`
     this.load.style.zIndex = `${zIndex + 1}`
+    this.load.innerHTML = this.getLoadContent(options)
     document.body.appendChild(this.mask)
     this.timeoutId = setTimeout(() => {
       document.body.appendChild(this.load)

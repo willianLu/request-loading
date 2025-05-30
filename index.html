@@ -36,14 +36,16 @@
       window.Loading = Loading
     </script>
     <script>
+      let count = 0
       function show() {
         console.log('[ 运行测试 ]', window.Loading)
-        window.Loading.show()
+        count++
+        const options = {
+          message: count < 3 ? '下载中...' : ''
+        }
+        window.Loading.show(options)
         setTimeout(() => {
-          window.Loading.show()
-          setTimeout(() => {
-            window.Loading.hide()
-          }, 1000)
+          window.Loading.hide()
         }, 1000)
       }
     </script>
