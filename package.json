@@ -1,11 +1,14 @@
 {
   "name": "request-loading",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Http request loading, delayed display and anti-repeat click",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -18,7 +21,8 @@
   ],
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsup",
+    "build": "tsup --env.NODE_ENV production",
+    "example": "live-server",
     "prepublishOnly": "npm run build",
     "prepare": "husky install"
   },
@@ -51,6 +55,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.1",
+    "live-server": "^1.2.2",
     "nano-staged": "^0.8.0",
     "postcss": "^8.4.38",
     "prettier": "^2.7.1",

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Loading样例页面</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      .popup {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80vw;
+        height: 80vh;
+        background-color: gray;
+        color: #fff;
+      }
+    </style>
+    <link rel="stylesheet" href="./dist/index.css" />
+    <script type="module">
+      import Loading from './dist/index.js'
+      window.Loading = Loading
+    </script>
+    <script>
+      function show() {
+        console.log('[ 运行测试 ]', window.Loading)
+        window.Loading.show()
+        setTimeout(() => {
+          window.Loading.show()
+          setTimeout(() => {
+            window.Loading.hide()
+          }, 1000)
+        }, 1000)
+      }
+    </script>
+  </head>
+  <body>
+    <div class="popup" onClick="show()">弹窗</div>
+  </body>
+</html>

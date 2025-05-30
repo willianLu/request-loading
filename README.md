@@ -17,9 +17,12 @@ yarn add request-loading
 ### 运行项目示例
 
 ```bash
-cd ./example
+# 安装依赖
 npm install
+# 先运行dev，编译代码
 npm run dev
+# 再运行example，启动本地服务
+npm run example
 ```
 
 ### 用法
@@ -43,10 +46,12 @@ http.get('/user/info').then(() => {
 
 | 参数         | 类型   | 必填项 | 默认                     | 说明                      |
 | ------------ | ------ | ------ | ------------------------ | ------------------------- |
-| zIndex       | number | 否     | 9999                     | 指定 loadin 层级          |
+| zIndex       | number | 否     | 3000                     | 指定 loadin 层级          |
 | delay        | number | 否     | 500                      | 延迟展示 loading 的时间   |
 | icon         | string | 否     | 'default'、'dot'、 'bar' | 默认提供三种 Loading 动画 |
 | iconTemplate | string | 否     | --                       | 设置自定义 icon 模版      |
+
+> 对于可能存在的 zIndex 层级问题，本工具做了兼容支持，若存在视图中展示元素的层级(zIndex)高于设置的 zIndex，则取视图中展示元素的最高层级(zIndex)+1
 
 - show
   Loading 展示调用

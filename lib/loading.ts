@@ -10,14 +10,13 @@ export interface LoadingOptions {
 }
 
 export default class Loading {
-  private mask!: Element
-  private load!: Element
+  private mask!: HTMLDivElement
+  private load!: HTMLDivElement
   private icon: IconType = 'default'
-  private zIndex = 9999
+  private zIndex = 3000
   private delay = 500
   private timestemp = 0
   private timeoutId: ReturnType<typeof setTimeout> | null = null
-  private isShow = false
   constructor() {
     this.init()
   }
@@ -48,7 +47,7 @@ export default class Loading {
     }
   }
   setConfig(options: LoadingOptions) {
-    this.zIndex = options.zIndex || 9999
+    this.zIndex = options.zIndex || this.zIndex
     this.delay = options.delay || 500
     if (options.iconTemplate) {
       this.load.innerHTML = options.iconTemplate
@@ -56,15 +55,38 @@ export default class Loading {
       this.load.innerHTML = this.getIconTemplate(options.icon)
     }
   }
+  // 获取当前视图中，最高的z-index，最小为3000
+  private getViewTopZIndex() {
+    let el = document.elementFromPoint(
+      window.innerWidth / 2,
+      window.innerHeight / 2
+    )
+    let max = this.zIndex
+    while (
+      el &&
+      el.tagName.toLocaleLowerCase() !== 'body' &&
+      el.parentElement
+    ) {
+      const zIndex = Number(getComputedStyle(el).zIndex)
+      if (zIndex && zIndex > max) {
+        max = zIndex + 1
+      }
+      el = el.parentElement
+    }
+    return max
+  }
   show() {
     // 防止连续多次调用show，已最初的调用为准
     if (this.timestemp > 0) return
     this.timestemp = Date.now()
+    const zIndex = this.getViewTopZIndex()
+    console.log('[ 当前视图最高zIndex ]', zIndex)
+    this.mask.style.zIndex = `${zIndex}`
+    this.load.style.zIndex = `${zIndex + 1}`
     document.body.appendChild(this.mask)
     this.timeoutId = setTimeout(() => {
       document.body.appendChild(this.load)
       this.timeoutId = null
-      this.isShow = true
     }, this.delay)
   }
   hide() {
@@ -72,21 +94,25 @@ export default class Loading {
       clearTimeout(this.timeoutId)
       this.timeoutId = null
     }
-    if (this.timestemp === 0) return
-    document.body.removeChild(this.mask)
-    if (!this.isShow) return
-    // 弹窗show -> hide的持续时间
-    const duration = Date.now() - this.timestemp
+    const currentTimestemp = this.timestemp
     this.timestemp = 0
-    // 持续时间小于延迟时间，则没有展示弹窗，不做任何处理
-    if (duration <= this.delay) return
-    setTimeout(
-      () => {
-        document.body.removeChild(this.load)
-        this.isShow = false
-      },
-      // 展示不足300ms的，延迟补足到300ms消失
-      duration - this.delay < 300 ? 300 + this.delay - duration : 0
-    )
+    if (this.load.parentElement) {
+      // 弹窗show -> hide的持续时间
+      const duration = Date.now() - currentTimestemp
+      const long =
+        duration - this.delay < 300 ? 300 - (duration - this.delay) : 0
+      setTimeout(
+        () => {
+          document.body.removeChild(this.load)
+          if (this.mask.parentElement) {
+            document.body.removeChild(this.mask)
+          }
+        },
+        // 展示不足300ms的，延迟补足到300ms消失
+        long
+      )
+    } else if (this.mask.parentElement) {
+      document.body.removeChild(this.mask)
+    }
   }
 }
