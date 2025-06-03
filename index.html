@@ -15,19 +15,56 @@
         width: 100%;
         height: 100%;
       }
+      .main {
+        margin: 0 auto;
+        padding: 32px;
+        width: 372px;
+      }
+      .main input,
+      .loading-type {
+        display: block;
+        padding: 0 6px;
+        margin-bottom: 16px;
+        width: 300px;
+        height: 32px;
+        font-size: 16px;
+      }
+      .main button {
+        margin-bottom: 16px;
+        padding: 3px 8px;
+        height: 32px;
+      }
+      .tip {
+        font-size: 13px;
+        color: #ee5353;
+      }
       .popup {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
+        top: 0;
+        left: 0;
+        z-index: 3000;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 80vw;
-        height: 80vh;
-        background-color: gray;
-        color: #fff;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.3);
+        display: none;
+      }
+      .popup-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50vw;
+        height: 50vh;
+        background-color: #fff;
+        border-radius: 10px;
+      }
+      .popup-text {
+        margin-bottom: 16px;
+      }
+      .popup-text span {
+        color: #ee5353;
       }
     </style>
     <link rel="stylesheet" href="./dist/index.css" />
@@ -36,21 +73,86 @@
       window.Loading = Loading
     </script>
     <script>
-      let count = 0
+      function showPopup() {
+        const zIndex = document.querySelector('.z-index').value
+        const popup = document.querySelector('.popup')
+        popup.style.zIndex = zIndex
+        popup.style.display = 'flex'
+        document.querySelector(
+          '.popup-text'
+        ).innerHTML = `当前弹窗z-index: <span>${zIndex}</span>`
+      }
+      function hidePopup() {
+        document.querySelector('.popup').style.display = 'none'
+      }
+      function preventClose(event) {
+        event.stopPropagation()
+        event.preventDefault()
+      }
       function show() {
         console.log('[ 运行测试 ]', window.Loading)
-        count++
+        const type = document.querySelector('.loading-type').value
+        const message = document.querySelector('.loading-message').value
         const options = {
-          message: count < 3 ? '下载中...' : ''
+          icon: type,
+          message
         }
         window.Loading.show(options)
+        let long = document.querySelector('.loading-time').value
+        long = Number(long) || 1
+        long = long > 10 ? 10 : long < 1 ? 1 : long
         setTimeout(() => {
           window.Loading.hide()
-        }, 1000)
+        }, long * 1000)
       }
     </script>
   </head>
   <body>
-    <div class="popup" onClick="show()">弹窗</div>
+    <div class="main">
+      <div>设置Loading类型</div>
+      <select class="loading-type" value="default">
+        <option value="default">圆形动画(默认)</option>
+        <option value="bar">柱状动画</option>
+        <option value="dot">点状动画</option>
+        <!-- 更多选项 -->
+      </select>
+      <div>设置Loading文字内容</div>
+      <input
+        class="loading-message"
+        type="text"
+        placeholder="请输入内容"
+        value=""
+      />
+      <div>设置业务时长(单位：秒，最小1，最大10)</div>
+      <input
+        class="loading-time"
+        type="number"
+        placeholder="请输入时长"
+        value="1"
+      />
+      <div><button onClick="show()">显示Loading</button></div>
+      <div>设置弹窗z-index</div>
+      <div class="tip">
+        注意：Loading会自适应z-index，无需过于焦虑，只对全屏/屏幕居中的弹出层有效
+      </div>
+      <input
+        class="z-index"
+        type="text"
+        placeholder="请输入内容"
+        value="9999"
+      />
+      <div>
+        <button onClick="showPopup()">显示弹窗</button>
+      </div>
+      <div class="popup" onClick="hidePopup()">
+        <div class="popup-content" onClick="preventClose(event)">
+          <div>
+            <p class="popup-text">当前弹窗z-index: <span>3000</span></p>
+            <button onClick="hidePopup()">关闭弹窗</button>
+            <button onClick="show()">显示Loading</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
