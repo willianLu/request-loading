@@ -1,6 +1,6 @@
 {
   "name": "request-loading",
-  "version": "0.4.1",
+  "version": "0.5.1",
   "description": "Http request loading, delayed display and anti-repeat click",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -44,7 +44,7 @@
   "bugs": {
     "url": "https://github.com/willianLu/request-loading/issues"
   },
-  "homepage": "https://github.com/willianLu/request-loading#readme",
+  "homepage": "https://willianlu.github.io/request-loading/",
   "devDependencies": {
     "@types/node": "^18.11.8",
     "@typescript-eslint/eslint-plugin": "^5.30.7",

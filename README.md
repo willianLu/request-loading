@@ -16,6 +16,8 @@ yarn add request-loading
 
 ### 运行项目示例
 
+[样例地址](https://willianlu.github.io/request-loading/)
+
 ```bash
 # 安装依赖
 npm install
